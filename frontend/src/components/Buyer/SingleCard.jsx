@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Card, CardHeader, CardMedia, CardContent, CardActions, IconButton, Typography, Grid, Button, Dialog, DialogTitle, DialogContent, DialogActions, Divider, List, ListItem, ListItemText } from '@mui/material';
+import React, { useState } from 'react';
+import { Card, CardHeader, CardMedia, CardContent, CardActions, IconButton, Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { green } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Sellerdet from './SellerDetails'
+import Sellerdet from './SellerDetails';
+
 const RecipeReviewCard = ({ property }) => {
-    console.log(localStorage.getItem('buyerid'))
     const { title, location, area, bedrooms, bathrooms, price, nearbyHospitals, nearbyColleges, description, image, sellerid } = property;
     const [expanded, setExpanded] = useState(false);
     const [open, setOpen] = useState(false);
+    const [isAddedToFavorites, setIsAddedToFavorites] = useState(false);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -20,6 +20,32 @@ const RecipeReviewCard = ({ property }) => {
 
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const handleAddToFavorites = async () => {
+        const buyerId = localStorage.getItem('buyerid'); // Assuming buyerid is stored in localStorage
+
+        try {
+            const response = await fetch('http://localhost:5000/add-to-favorites', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    buyerId,
+                    propertyId: property._id,
+                    sellerId: sellerid
+                })
+            });
+
+            if (response.ok) {
+                setIsAddedToFavorites(true);
+            } else {
+                console.error('Failed to add to favorites');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     return (
@@ -40,7 +66,7 @@ const RecipeReviewCard = ({ property }) => {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
+                <IconButton aria-label="add to favorites" onClick={handleAddToFavorites}>
                     <FavoriteIcon />
                 </IconButton>
                 <Button
@@ -49,13 +75,6 @@ const RecipeReviewCard = ({ property }) => {
                 >
                     I'm Interested
                 </Button>
-                <IconButton
-                    aria-expanded={expanded}
-                    onClick={handleExpandClick}
-                    aria-label="show more"
-                >
-                    <ExpandMoreIcon />
-                </IconButton>
             </CardActions>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>{title}</DialogTitle>
@@ -68,14 +87,14 @@ const RecipeReviewCard = ({ property }) => {
                     <Typography variant="body1">Nearby Hospitals: {nearbyHospitals.join(', ')}</Typography>
                     <Typography variant="body1">Nearby Colleges: {nearbyColleges.join(', ')}</Typography>
                     <Typography variant="body1">Description: {description}</Typography>
-                    <Typography variant="body1">  <Sellerdet sellerId={sellerid} /></Typography>
-
+                    <Typography variant="body1"><Sellerdet sellerId={sellerid} /></Typography>
                     {/* Add more property details as needed */}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Close</Button>
                 </DialogActions>
             </Dialog>
+            {isAddedToFavorites && <Typography variant="body2" color="primary">Item added to favorites!</Typography>}
         </Card>
     );
 };

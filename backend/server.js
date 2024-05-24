@@ -146,7 +146,60 @@ app.get('/seller/:sellerId', async (req, res) => {
   }
 });
 
+app.post('/add-to-favorites', async (req, res) => {
+  const { propertyId, sellerId, buyerId } = req.body;
 
+  try {
+    // Check if the item is already in favorites
+    const existingFavorite = await Interested.findOne({ propertyId, buyerId });
+
+    if (existingFavorite) {
+      return res.status(400).json({ error: 'Item already in favorites' });
+    }
+
+    // Create a new favorite item
+    const newFavorite = new Interested({
+      propertyId,
+      sellerId,
+      buyerId,
+    });
+
+    // Save the new favorite item to the database
+    await newFavorite.save();
+
+    res.status(201).json({ message: 'Item added to favorites' });
+  } catch (error) {
+    console.error('Error adding item to favorites:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+//search functionality
+app.get('/wholeproperties', async (req, res) => {
+  const searchQuery = req.query.search || '';
+
+  try {
+      let properties;
+      if (searchQuery) {
+          // Perform a simple case-insensitive text search on relevant fields
+          properties = await Property.find({
+              $or: [
+                  { title: { $regex: searchQuery, $options: 'i' } },
+                  { location: { $regex: searchQuery, $options: 'i' } },
+                  { description: { $regex: searchQuery, $options: 'i' } },
+              ],
+          });
+      } else {
+          properties = await Property.find();
+      }
+
+      res.json(properties);
+  } catch (error) {
+      console.error('Error fetching properties:', error);
+      res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
