@@ -20,9 +20,10 @@ import ListItemText from '@mui/material/ListItemText';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import HomeIcon from '@mui/icons-material/Home';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import Createproperty from'./CreateProperty'
+
 import { useNavigate } from 'react-router-dom';
 const drawerWidth = 240;
+import Interestedsingle from './Interestedsingle';
 
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -150,7 +151,7 @@ export default function PersistentDrawerLeft() {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        <Createproperty />
+        <Interestedsingle />
        
       </Main>
       

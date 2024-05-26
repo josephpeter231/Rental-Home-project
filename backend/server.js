@@ -222,5 +222,28 @@ app.get('/singleproperty/:id', async (req, res) => {
       res.status(500).json({ message: 'Server error' });
   }
 });
+
+//interested users in sellers page
+app.get('/api/interested/:sellerId', async (req, res) => {
+  try {
+    const { sellerId } = req.params;
+    const interestedProperties = await Interested.find({ sellerId });
+    res.json(interestedProperties);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching interested properties', error });
+  }
+});
+
+//get specific users
+app.get('/api/user/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.findById(userId);
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching user details', error });
+  }
+});
+
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

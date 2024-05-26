@@ -7,6 +7,7 @@ import SellDashboard from './components/Seller/SellerDashboard';
 import Allproperties from './components/Seller/Allproperties';
 import Interestedhomes from './components/Buyer/InteretedHomes'
 import Notifications from './components/Buyer/notifications';
+import InterestedUsers from './components/Seller/InterestedUsers';
 const App = () => {
   return (
     <Router>
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/all-properties" element={<Allproperties />} />
         <Route path="/interested-homes" element={<Interestedhomes />} />
         <Route path="/notifications" element={<Notifications />} />
+        <Route path="/intersted-users" element={<InterestedUsers/>} />
         
 
       </Routes>

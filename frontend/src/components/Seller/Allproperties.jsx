@@ -122,7 +122,7 @@ export default function PersistentDrawerLeft() {
         </DrawerHeader>
         <Divider />
         <List>
-  {['Add Property', 'All Properties', 'Notifications'].map((text, index) => (
+  {['Add Property', 'All Properties', 'Intersted Users'].map((text, index) => (
     <ListItem key={text} disablePadding>
       <ListItemButton component={Link} to={`/${text.toLowerCase().replace(/\s+/g, '-')}`}>
         <ListItemIcon>
