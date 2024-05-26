@@ -17,14 +17,14 @@ export default function Example() {
       <header className="absolute inset-x-0 top-0 z-50">
         <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div className="flex lg:flex-1">
-            <a href="#" className="-m-1.5 p-1.5">
+            <button onClick={click} className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
               <img
                 className="h-8 w-auto"
                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                 alt=""
               />
-            </a>
+            </button>
           </div>
           <div className="flex lg:hidden">
             <button
@@ -72,12 +72,11 @@ export default function Example() {
                  
                 </div>
                 <div className="py-6">
-                  <a
-                    href="/login"
+                  <button onClick={click}
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   >
                     Log in
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -121,9 +120,9 @@ export default function Example() {
               >
                 Get started
               </button>
-              <a href="/login" className="text-sm font-semibold leading-6 text-gray-900">
+              <button onClick={click} className="text-sm font-semibold leading-6 text-gray-900">
                 Discover Homes <span aria-hidden="true">→</span>
-              </a>
+              </button>
             </div>
           </div>
         </div>
