@@ -11,7 +11,7 @@ const YourComponent = () => {
 
     const fetchInterestedProperties = async () => {
         try {
-            const response = await fetch('http://localhost:5000/interested-properties');
+            const response = await fetch('https://rental-home-project.onrender.com/interested-properties');
             const data = await response.json();
             setInterestedProperties(data);
             console.log(data);
@@ -26,7 +26,7 @@ const YourComponent = () => {
             const propertyIds = properties.map((property) => property.propertyId);
             const propertyData = [];
             for (const id of propertyIds) {
-                const response = await fetch(`http://localhost:5000/singleproperty/${id}`);
+                const response = await fetch(`https://rental-home-project.onrender.com/singleproperty/${id}`);
                 const property = await response.json();
                 propertyData.push(property);
             }

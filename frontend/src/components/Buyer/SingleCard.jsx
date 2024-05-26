@@ -27,7 +27,7 @@ const RecipeReviewCard = ({ property }) => {
         const buyerId = localStorage.getItem('buyerid'); // Assuming buyerid is stored in localStorage
 
         try {
-            const response = await fetch('http://localhost:5000/add-to-favorites', {
+            const response = await fetch('https://rental-home-project.onrender.com/add-to-favorites', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

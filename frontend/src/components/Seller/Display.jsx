@@ -9,7 +9,7 @@ const YourComponent = () => {
   const sellerid = localStorage.getItem('sellerid');
 
   useEffect(() => {
-    fetch(`http://localhost:5000/allproperties/seller/${sellerid}`)
+    fetch(`https://rental-home-project.onrender.com/allproperties/seller/${sellerid}`)
       .then((response) => response.json())
       .then((data) => {
         setProperties(data);
@@ -29,7 +29,7 @@ const YourComponent = () => {
   };
 
   const handleSaveEditForm = (editedProperty) => {
-    fetch(`http://localhost:5000/property/${editProperty._id}`, {
+    fetch(`https://rental-home-project.onrender.com/property/${editProperty._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

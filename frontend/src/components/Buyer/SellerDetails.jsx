@@ -8,7 +8,7 @@ const ViewSellerDetails = ({ sellerId }) => {
   
   const handleOpen = () => {
     setOpen(true);
-    fetch(`http://localhost:5000/seller/${sellerId}`)
+    fetch(`https://rental-home-project.onrender.com/seller/${sellerId}`)
       .then((response) => response.json())
       .then((data) => {
         setSellerDetails(data);

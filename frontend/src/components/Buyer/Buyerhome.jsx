@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Grid, TextField, Box, Pagination, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import RecipeReviewCard from './SingleCard';
 
@@ -17,7 +17,7 @@ const YourComponent = () => {
 
     const fetchProperties = async () => {
         try {
-            const response = await fetch('http://localhost:5000/wholeproperties');
+            const response = await fetch('https://rental-home-project.onrender.com/wholeproperties');
             const data = await response.json();
             setAllProperties(data);
             setFilteredProperties(data);
