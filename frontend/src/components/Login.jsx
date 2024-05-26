@@ -19,6 +19,7 @@ import { useEffect } from 'react';
 
 export default function SignInSide() {
   const navigate = useNavigate();
+
   const clicksign = () =>{
     navigate('/signup')
 
@@ -35,7 +36,7 @@ export default function SignInSide() {
         }
       }, []);
     
-    const navigate = useNavigate();
+    
     const handleSubmit = async(event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
