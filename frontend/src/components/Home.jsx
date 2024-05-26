@@ -1,12 +1,15 @@
 import { useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { Link } from 'react-router-dom'
-const navigation = [
- 
-]
+import { Link, useNavigate } from 'react-router-dom'
+
+
 
 export default function Example() {
+  const navigate = useNavigate();
+  const click = () =>{
+     navigate('/login')
+  }
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
@@ -34,16 +37,12 @@ export default function Example() {
             </button>
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
-            {navigation.map((item) => (
-              <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-gray-900">
-                {item.name}
-              </a>
-            ))}
+            
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="/login" className="text-sm font-semibold leading-6 text-gray-900">
+            <button onClick={click} className="text-sm font-semibold leading-6 text-gray-900">
               Log in <span aria-hidden="true">&rarr;</span>
-            </a>
+            </button>
           </div>
         </nav>
         <Dialog className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
@@ -103,10 +102,10 @@ export default function Example() {
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
             <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
             Discover Your New Home Today!{' '}
-              <Link to="/login" className="font-semibold text-indigo-600">
+              <button onClick={click} className="font-semibold text-indigo-600">
                 <span className="absolute inset-0" aria-hidden="true" />
                 Read more <span aria-hidden="true">&rarr;</span>
-              </Link>
+              </button>
             </div>
           </div>
           <div className="text-center">
@@ -117,12 +116,11 @@ export default function Example() {
                Comfort and Convenience Await!
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Link
-                to="/login"
+              <button onClick={click}
                 className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Get started
-              </Link>
+              </button>
               <a href="/login" className="text-sm font-semibold leading-6 text-gray-900">
                 Discover Homes <span aria-hidden="true">→</span>
               </a>
