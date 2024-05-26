@@ -18,6 +18,11 @@ const defaultTheme = createTheme();
 import { useEffect } from 'react';
 
 export default function SignInSide() {
+  const navigate = useNavigate();
+  const clicksign = () =>{
+    navigate('/signup')
+
+  }
 
 
     useEffect(() => {
@@ -146,9 +151,9 @@ export default function SignInSide() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="/signup" variant="body2">
+                  <button onClick={clicksign} variant="body2">
                     {"Don't have an account? Sign Up"}
-                  </Link>
+                  </button>
                 </Grid>
               </Grid>
       
