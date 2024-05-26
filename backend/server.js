@@ -7,7 +7,7 @@ const propertyRoutes = require('./routes/propertyRoutes.js');
 const Property = require('./models/property.js')
 const app = express();
 const User = require('./models/user.js')
-
+const Interested = require('./models/interested.js')
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -201,5 +201,26 @@ app.get('/wholeproperties', async (req, res) => {
   }
 });
 
+app.get('/interested-properties', async (req, res) => {
+  try {
+      const interestedProperties = await Interested.find();
+      res.json(interestedProperties);
+  } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch interested properties' });
+  }
+});
+
+app.get('/singleproperty/:id', async (req, res) => {
+  try {
+      const property = await Property.findById(req.params.id);
+      if (!property) {
+          return res.status(404).json({ message: 'Property not found' });
+      }
+      res.json(property);
+  } catch (error) {
+      console.error('Error fetching property by ID:', error);
+      res.status(500).json({ message: 'Server error' });
+  }
+});
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

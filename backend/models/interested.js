@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const interestedSchema = new mongoose.Schema({
   propertyId: {
-    type: ObjectId,
+    type: Object,
     ref: 'Property',
     required: true,
   },

@@ -5,6 +5,7 @@ import SignUp from './components/SignUp';
 import Dashboard from './components/Buyer/Dashboard';
 import SellDashboard from './components/Seller/SellerDashboard';
 import Allproperties from './components/Seller/Allproperties';
+import Interestedhomes from './components/Buyer/InteretedHomes'
 const App = () => {
   return (
     <Router>
@@ -13,9 +14,13 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/dashboard" element={<Dashboard/>} />
+        <Route path="/rental-home" element={<Dashboard/>} />
         <Route path="/sellerdashboard" element={<SellDashboard/>} />
         <Route path="/add-property" element={<SellDashboard/>} />
         <Route path="/all-properties" element={<Allproperties />} />
+        <Route path="/interested-homes" element={<Interestedhomes />} />
+        
+
       </Routes>
     </Router>
   );
