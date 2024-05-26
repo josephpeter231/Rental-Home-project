@@ -20,7 +20,7 @@ import ListItemText from '@mui/material/ListItemText';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import HomeIcon from '@mui/icons-material/Home';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import BuyerH from './Buyerhome'
+import NotificationNo from './NotificationNo';
 import { useNavigate } from 'react-router-dom';
 const drawerWidth = 240;
 
@@ -152,7 +152,8 @@ export default function PersistentDrawerLeft() {
       <Main open={open}>
         <DrawerHeader />
         {/* <Createproperty /> */}
-        <BuyerH />
+        <NotificationNo />
+         
        
       </Main>
       

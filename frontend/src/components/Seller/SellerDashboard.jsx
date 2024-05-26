@@ -106,7 +106,7 @@ export default function PersistentDrawerLeft() {
           </IconButton>
           <Typography variant="h6" noWrap component="div">
             Sellers Dashboard
-            <button className='ml-96'onClick={logout}>Logout</button>
+            <button className='ml-[850px]'onClick={logout}>Logout</button>
           </Typography>
           
           <div></div>

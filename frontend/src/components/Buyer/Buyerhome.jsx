@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Grid, TextField, Box } from '@mui/material';
+import { Grid, TextField, Box, Pagination } from '@mui/material';
 import RecipeReviewCard from './SingleCard';
 
 const YourComponent = () => {
     const [allProperties, setAllProperties] = useState([]);
     const [filteredProperties, setFilteredProperties] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 8; // Adjust the number of items per page as needed
 
     useEffect(() => {
         fetchProperties();
@@ -38,6 +40,17 @@ const YourComponent = () => {
         });
 
         setFilteredProperties(filtered);
+        setCurrentPage(1); // Reset to the first page on search
+    };
+
+    const handlePageChange = (event, value) => {
+        setCurrentPage(value);
+    };
+
+    const getPaginatedProperties = () => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        return filteredProperties.slice(startIndex, endIndex);
     };
 
     return (
@@ -52,12 +65,20 @@ const YourComponent = () => {
                 />
             </Box>
             <Grid container spacing={2}>
-                {filteredProperties.map((property) => (
+                {getPaginatedProperties().map((property) => (
                     <Grid item key={property._id} xs={12} sm={6} md={4} lg={3}>
                         <RecipeReviewCard property={property} />
                     </Grid>
                 ))}
             </Grid>
+            <Box display="flex" justifyContent="center" alignItems="center" mt={9}>
+                <Pagination
+                    count={Math.ceil(filteredProperties.length / itemsPerPage)}
+                    page={currentPage}
+                    onChange={handlePageChange}
+                    color="primary"
+                />
+            </Box>
         </div>
     );
 };

@@ -1,54 +1,161 @@
-import React, { useState, useEffect } from 'react';
-import { Grid } from '@mui/material';
-import RecipeReviewCard from './SingleCard'
-const YourComponent = () => {
-    const [interestedProperties, setInterestedProperties] = useState([]);
-    const [newprop,setNewProp] = useState([]);
+import * as React from 'react';
+import { styled, useTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import { Link } from 'react-router-dom';
+import Drawer from '@mui/material/Drawer';
+import CssBaseline from '@mui/material/CssBaseline';
+import MuiAppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import List from '@mui/material/List';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import HomeIcon from '@mui/icons-material/Home';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import BuyerH from './InterestHomePage'
+import { useNavigate } from 'react-router-dom';
+const drawerWidth = 240;
 
-    useEffect(() => {
-        fetchInterestedProperties();
-    }, []);
 
-    const fetchInterestedProperties = async () => {
-        try {
-            const response = await fetch('http://localhost:5000/interested-properties');
-            const data = await response.json();
-            setInterestedProperties(data);
-            console.log(data);
-            fetchPropertiesByIds(data);
-        } catch (error) {
-            console.error('Error fetching interested properties:', error);
-        }
-    };
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme, open }) => ({
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: `-${drawerWidth}px`,
+    ...(open && {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    }),
+  }),
+);
 
-    const fetchPropertiesByIds = async (properties) => {
-        try {
-            const propertyIds = properties.map((property) => property.propertyId);
-            const propertyData = [];
-            for (const id of propertyIds) {
-                const response = await fetch(`http://localhost:5000/singleproperty/${id}`);
-                const property = await response.json();
-                propertyData.push(property);
-            }
-            console.log(propertyData);
-            setNewProp(propertyData);
-        } catch (error) {
-            console.error('Error fetching properties by IDs:', error);
-        }
-    };
 
-    return (
-        <div>
-                <Grid container spacing={2}>
-                {newprop.map((property) => (
-                    <Grid item key={property._id} xs={12} sm={6} md={4} lg={3}>
-                        <RecipeReviewCard property={property} />
-                    </Grid>
-                ))}
-            </Grid>
-            {/* Render content here */}
-        </div>
-    );
-};
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  transition: theme.transitions.create(['margin', 'width'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: `${drawerWidth}px`,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
 
-export default YourComponent;
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+  justifyContent: 'flex-end',
+}));
+
+export default function PersistentDrawerLeft() {
+  const navigate = useNavigate();
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(true);
+  const logout = () =>{
+    localStorage.removeItem('user')
+    localStorage.removeItem('islogin')
+    navigate('/')
+  }
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  return (
+
+    <Box sx={{ display: 'flex' }} >
+      <CssBaseline />
+      <AppBar position="fixed" open={open}>
+        <Toolbar >
+          <IconButton
+            color="gray"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap component="div">
+            Buyers Dashboard
+            <button className='ml-[900px]'onClick={logout}>Logout</button>
+          </Typography>
+          
+          <div></div>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+          },
+        }}
+        variant="persistent"
+        anchor="left"
+        open={open}
+      >
+        <DrawerHeader>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </DrawerHeader>
+        <Divider />
+        <List>
+  {['Rental Home', 'Interested Homes', 'Notifications'].map((text, index) => (
+    <ListItem key={text} disablePadding>
+      <ListItemButton component={Link} to={`/${text.toLowerCase().replace(/\s+/g, '-')}`}>
+        <ListItemIcon>
+          {index === 0 && <AddCircleOutlineIcon />}
+          {index === 1 && <HomeIcon />}
+          {index === 2 && <NotificationsIcon />}
+        </ListItemIcon>
+        <ListItemText primary={text} />
+      </ListItemButton>
+    </ListItem>
+  ))}
+</List>
+        <Divider />
+        
+      </Drawer>
+      <Main open={open}>
+        <DrawerHeader />
+        {/* <Createproperty /> */}
+        <BuyerH />
+       
+      </Main>
+      
+    </Box>
+    
+  );
+}

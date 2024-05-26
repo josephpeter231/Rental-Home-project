@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { useState } from 'react';
 import { Card, CardHeader, CardMedia, CardContent, CardActions, IconButton, Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { green } from '@mui/material/colors';
